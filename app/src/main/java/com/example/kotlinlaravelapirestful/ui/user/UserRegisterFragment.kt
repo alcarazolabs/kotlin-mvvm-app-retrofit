@@ -46,6 +46,14 @@ class UserRegisterFragment : Fragment(R.layout.fragment_user_register) {
 
     fun setupObservers(){
 
+        viewModel.apiError.observe(viewLifecycleOwner, {
+            when(it){
+                is Resource.apiError->{
+                   showApiErrors(it.errorTypeName)
+                }
+            }
+        })
+
         viewModel.registerResponse.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Loading -> {
@@ -87,6 +95,18 @@ class UserRegisterFragment : Fragment(R.layout.fragment_user_register) {
         }else{
             binding.lblError.visibility = View.GONE
         }
+    }
+
+    fun showApiErrors(errorType:String){
+        if(errorType.equals("TIMEOUT")){
+            showToast("No es posible conectarse al servidor.")
+        }else if(errorType.equals("NETWORK")){
+            showToast("No hay conexión para hacer la petición")
+        }
+    }
+
+    fun showToast(msg:String){
+        Toast.makeText(activity, msg, Toast.LENGTH_LONG).show()
     }
 
 }
