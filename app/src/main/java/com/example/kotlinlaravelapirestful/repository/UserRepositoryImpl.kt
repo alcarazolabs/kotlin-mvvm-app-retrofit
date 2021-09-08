@@ -1,6 +1,7 @@
 package com.example.kotlinlaravelapirestful.repository
 
 import com.example.demo.core.Resource
+import com.example.kotlinlaravelapirestful.data.model.LoginResponse
 import com.example.kotlinlaravelapirestful.data.model.RegisterResponse
 import com.example.kotlinlaravelapirestful.data.remote.UserDataSource
 
@@ -22,10 +23,9 @@ class UserRepositoryImpl(private val dataSource: UserDataSource) : UserRepositor
     }*/
 
     //Aprovechando kotlin
-   // override suspend fun registerUser(name: String, email: String, password: String): RegisterResponse = dataSource.registerUser(name, email,password)
-    //luego se modifica el datasource para que traiga la información desde el webservice
 
     override suspend fun registerUser(name: String, email: String, password: String) : RegisterResponse = dataSource.registerUser(name, email,password)
 
+    override suspend fun loginUser(email: String, password: String): LoginResponse = dataSource.loginUser(email, password)
 
 }

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_userLoginFragment_to_userRegisterFragment"
             app:destination="@id/userRegisterFragment" />
+        <action
+            android:id="@+id/action_userLoginFragment_to_userDashboardFragment"
+            app:destination="@id/userDashboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/userRegisterFragment"
@@ -23,4 +26,9 @@
             android:id="@+id/action_userRegisterFragment_to_userLoginFragment"
             app:destination="@id/userLoginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/userDashboardFragment"
+        android:name="com.example.kotlinlaravelapirestful.ui.user.UserDashboardFragment"
+        android:label="fragment_user_dashboard"
+        tools:layout="@layout/fragment_user_dashboard" />
 </navigation>

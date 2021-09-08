@@ -1,5 +1,6 @@
 package com.example.kotlinlaravelapirestful.repository
 
+import com.example.kotlinlaravelapirestful.data.model.LoginResponse
 import com.example.kotlinlaravelapirestful.data.model.RegisterResponse
 import com.example.primerappmvvmretrofitkotlin.application.AppConstants
 import com.google.gson.GsonBuilder
@@ -16,6 +17,12 @@ interface WebService {
     suspend fun registerUser(@Field("name") name: String,
                             @Field("email") email: String,
                             @Field("password")password: String): RegisterResponse
+
+    @FormUrlEncoded
+    @Headers("Accept: application/json")
+    @POST("login")
+    suspend fun loginUser(@Field("email") email: String,
+                          @Field("password")password: String): LoginResponse
 
 }
 object RetrofitClient {
