@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.demo.core.Resource
 import com.example.kotlinlaravelapirestful.R
+import com.example.kotlinlaravelapirestful.core.UserPreferences
 import com.example.kotlinlaravelapirestful.data.remote.UserDataSource
 import com.example.kotlinlaravelapirestful.databinding.FragmentUserRegisterBinding
 import com.example.kotlinlaravelapirestful.presentation.UserViewModel
@@ -25,7 +26,7 @@ class UserRegisterFragment : Fragment(R.layout.fragment_user_register) {
 
     //Instanciar viewModel
     private val viewModel by viewModels<UserViewModel> { UserViewModelFactory(UserRepositoryImpl(
-        UserDataSource(RetrofitClient.webservice)
+        UserDataSource(RetrofitClient.webservice),  UserPreferences(requireContext())
     )) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

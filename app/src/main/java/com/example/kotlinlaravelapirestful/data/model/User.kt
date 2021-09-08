@@ -14,3 +14,9 @@ data class User (
     val created_at: String,
     val updated_at: String
  ): Parcelable
+
+data class UserInfoObj(
+    val user: User
+)
+
+data class UserInfoResponse(val result: List<UserInfoObj>)

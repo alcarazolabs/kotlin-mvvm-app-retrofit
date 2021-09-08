@@ -5,6 +5,7 @@ import com.example.demo.core.Resource
 import com.example.kotlinlaravelapirestful.data.model.LoginResponse
 import com.example.kotlinlaravelapirestful.data.model.RegisterResponse
 import com.example.kotlinlaravelapirestful.data.model.RegisterResponseObj
+import com.example.kotlinlaravelapirestful.data.model.UserInfoResponse
 import com.example.kotlinlaravelapirestful.repository.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -26,4 +27,7 @@ class UserDataSource(private val webService: WebService) {
     }
 
     suspend fun loginUser(email:String, password: String) : LoginResponse = webService.loginUser(email, password)
+
+    suspend fun userInfo(access_token:String) : UserInfoResponse = webService.userInfo(access_token)
+
 }

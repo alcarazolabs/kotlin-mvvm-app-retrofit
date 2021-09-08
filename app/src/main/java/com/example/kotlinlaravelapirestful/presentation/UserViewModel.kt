@@ -6,6 +6,8 @@ import com.example.demo.core.Resource
 import com.example.kotlinlaravelapirestful.core.ApiCallsHandler
 import com.example.kotlinlaravelapirestful.data.model.LoginResponse
 import com.example.kotlinlaravelapirestful.data.model.RegisterResponse
+import com.example.kotlinlaravelapirestful.data.model.User
+import com.example.kotlinlaravelapirestful.data.model.UserInfoResponse
 import com.example.kotlinlaravelapirestful.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,8 +68,25 @@ class UserViewModel (private var repo : UserRepository) : ViewModel(), ApiCallsH
             Resource.Success(repo.loginUser(email, password))
         }
     }
+    //funcion para poder guardar el token de autenticacion del usuario, este se obtiene luego de hacer login.
+    suspend fun saveAuthToken(token:String){
+        repo.saveAuthToken("Bearer "+token)
+    }
     //##########################################################################################
 
+    //################################## LiveData para obtener la información del usuario ######
+
+    private val _user: MutableLiveData<Resource<UserInfoResponse>> = MutableLiveData()
+    val userInfo: LiveData<Resource<UserInfoResponse>>
+        get() = _user
+
+    fun getUser(access_token:String) = viewModelScope.launch {
+        _user.value = Resource.Loading()
+        _user.value = ApiCallsHandler.safeApiCall(this@UserViewModel) {
+            Resource.Success(repo.userInfo(access_token))
+        }
+    }
+    //##########################################################################################
 
     //###### implemented methods from ApiCallsHandler.RemoteErrorEmitter #######################
     override fun onError(msg: String) {

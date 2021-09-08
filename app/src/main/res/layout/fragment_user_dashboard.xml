@@ -25,11 +25,17 @@
         android:textSize="24sp"
         />
     <TextView
-        android:id="@+id/lblUserToken"
+        android:id="@+id/lblUserEmail"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Token is"
+        android:text="My email is"
         android:textSize="15sp"
         />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 </LinearLayout>

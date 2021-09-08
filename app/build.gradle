@@ -14,6 +14,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -63,5 +64,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     // LiveData - kotlin extension kts
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+
+    //dataStore para sharedPreferences
+
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha01"
+
+    //multidex para soportar mas de 64k metodos
+    implementation "androidx.multidex:multidex:2.0.1"
 
 }
