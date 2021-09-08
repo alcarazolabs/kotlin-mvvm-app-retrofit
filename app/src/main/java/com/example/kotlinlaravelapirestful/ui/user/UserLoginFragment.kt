@@ -1,11 +1,10 @@
 package com.example.kotlinlaravelapirestful.ui.user
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,11 +20,14 @@ import com.example.kotlinlaravelapirestful.presentation.UserViewModel
 import com.example.kotlinlaravelapirestful.presentation.UserViewModelFactory
 import com.example.kotlinlaravelapirestful.repository.RetrofitClient
 import com.example.kotlinlaravelapirestful.repository.UserRepositoryImpl
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
 class UserLoginFragment : Fragment(R.layout.fragment_user_login) {
     private lateinit var binding : FragmentUserLoginBinding
+   protected lateinit var userPreferences: UserPreferences
+
     //Instanciar viewModel
     private val viewModel by viewModels<UserViewModel> { UserViewModelFactory(UserRepositoryImpl(
         UserDataSource(RetrofitClient.webservice), UserPreferences(requireContext())
@@ -34,16 +36,30 @@ class UserLoginFragment : Fragment(R.layout.fragment_user_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentUserLoginBinding.bind(view)
+        //instancia clase sherePreferences
+        userPreferences = UserPreferences(requireContext())
+        //obtener token
+        lifecycleScope.launch { userPreferences.authToken.first() }
 
+        lifecycleScope.launch {
+            val authToken = userPreferences.authToken.first()
+            //si el token no es nulo enviar al usuario al dashboard
+            authToken?.let {
+                findNavController().navigate(R.id.action_userLoginFragment_to_userDashboardFragment)
+            }
+        }
 
         binding.btnSingUp.setOnClickListener{
             findNavController().navigate(R.id.action_userLoginFragment_to_userRegisterFragment)
         }
 
         binding.btnLogin.setOnClickListener{
-            login()
+            deleteOldAuthToken()
+            doLogin()
         }
         setupObservers()
+
+
     }
 
     fun setupObservers(){
@@ -65,8 +81,8 @@ class UserLoginFragment : Fragment(R.layout.fragment_user_login) {
                     var listResponse = it.data.result
                     listResponse.forEach{ res->
                         showToast(res.message)
-
-                        onpenDashboard(res.success, res.user, res.access_token!!)
+                        Log.d("token", "${res.access_token}")
+                        onpenDashboard(res.success, res.user, res.access_token)
 
                     }
                     //Toast.makeText(activity, ""+it.data.result, Toast.LENGTH_LONG).show()
@@ -82,7 +98,7 @@ class UserLoginFragment : Fragment(R.layout.fragment_user_login) {
 
     }
 
-    fun login(){
+    fun doLogin(){
         val email = binding.userEmail.text.toString().trim()
         val password = binding.userPassword.text.toString().trim()
         viewModel.loginUser(email, password)
@@ -105,12 +121,24 @@ class UserLoginFragment : Fragment(R.layout.fragment_user_login) {
            Log.d("user", ""+user?.name.toString())
             //Guardar token en el sharePreferences dentro de una corrutina.. si no se hace lyfecycleScope.launch dara error xq la funcion saveAuthToken es una funcion suspendida
             lifecycleScope.launch {
+
                 viewModel.saveAuthToken(access_token!!)
 
             }
+            //Agregar un delay de 3 mientras el token se guardo (Opcional).
+            Thread.sleep(3_000)
             //abrir fragment Dashboard
-            findNavController().navigate(R.id.action_userLoginFragment_to_userDashboardFragment)
+            findNavController().navigate(R.id.go_home)
+            //Revisar el main_graph se agrego un action para prevenir que desde el dashboard regrese con back button, en su lugar se cierra el app, para eso se agrego el codigo en el main_graph
         }
     }
+
+
+   fun deleteOldAuthToken() = lifecycleScope.launch {
+       //eliminar token del datastore
+       userPreferences.clear()
+
+   }
+
 
 }

@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
     app:startDestination="@id/userLoginFragment">
+    <!-- Action agregago para prevenir volver atras en el dashboard a login en su lugar se cerrará la app
+     Se usa popUtTo-->
+    <action
+        android:id="@+id/go_home"
+        app:destination="@+id/userDashboardFragment"
+        app:popUpTo="@+id/main_graph"
+    app:popUpToInclusive="true"/>
 
     <fragment
         android:id="@+id/userLoginFragment"
@@ -30,5 +37,9 @@
         android:id="@+id/userDashboardFragment"
         android:name="com.example.kotlinlaravelapirestful.ui.user.UserDashboardFragment"
         android:label="fragment_user_dashboard"
-        tools:layout="@layout/fragment_user_dashboard" />
+        tools:layout="@layout/fragment_user_dashboard" >
+        <action
+            android:id="@+id/action_userDashboardFragment_to_userLoginFragment"
+            app:destination="@id/userLoginFragment" />
+    </fragment>
 </navigation>

@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
  - Features of this branch:
 * - The user can register his-selft
 * - do login and redirect to dashboard
+* - Display userinfo in the dashboard
 * */
 
 
@@ -70,7 +71,7 @@ class UserViewModel (private var repo : UserRepository) : ViewModel(), ApiCallsH
     }
     //funcion para poder guardar el token de autenticacion del usuario, este se obtiene luego de hacer login.
     suspend fun saveAuthToken(token:String){
-        repo.saveAuthToken("Bearer "+token)
+        repo.saveAuthToken("Bearer $token")
     }
     //##########################################################################################
 

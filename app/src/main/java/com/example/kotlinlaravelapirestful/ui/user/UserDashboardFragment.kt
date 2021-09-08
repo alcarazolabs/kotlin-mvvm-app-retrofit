@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.demo.core.Resource
 import com.example.kotlinlaravelapirestful.R
 import com.example.kotlinlaravelapirestful.core.UserPreferences
@@ -21,6 +22,7 @@ import com.example.kotlinlaravelapirestful.repository.RetrofitClient
 import com.example.kotlinlaravelapirestful.repository.UserRepositoryImpl
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 
 class UserDashboardFragment : Fragment(R.layout.fragment_user_dashboard) {
@@ -42,6 +44,9 @@ class UserDashboardFragment : Fragment(R.layout.fragment_user_dashboard) {
         setupObservers()
         getUserInfo()
 
+        binding.btnLogOut.setOnClickListener {
+            doLogOut()
+        }
     }
 
     fun setupObservers(){
@@ -63,7 +68,8 @@ class UserDashboardFragment : Fragment(R.layout.fragment_user_dashboard) {
     //se lanza corrutina para poder obtener el token
      fun getUserInfo()  = lifecycleScope.launch{
         //obtener token
-        val authToken = userPreferences.authToken.first()
+        // val authToken = runBlocking{ userPreferences.authToken.first() } same result, try it.
+        val authToken = userPreferences.authToken.first() //also it works.
         Log.d("tokensito", "$authToken")
         //obtener información del usuario.
         viewModel.getUser(authToken!!)
@@ -75,4 +81,14 @@ class UserDashboardFragment : Fragment(R.layout.fragment_user_dashboard) {
             lblUserEmail.text = user.email.toString()
         }
     }
+
+    fun doLogOut() = lifecycleScope.launch {
+        //delete auth-token
+        userPreferences.clear()
+        //send user to login
+         findNavController().navigate(R.id.action_userDashboardFragment_to_userLoginFragment)
+    }
+
+
+
 }
