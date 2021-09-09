@@ -6,7 +6,13 @@
     android:orientation="vertical"
     android:layout_margin="15dp"
     tools:context=".ui.user.UserDashboardFragment">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <TextView
         android:layout_gravity="center"
         android:layout_width="wrap_content"
@@ -32,6 +38,11 @@
         tools:text="My email is"
         android:textSize="15sp"
         />
+
+    <ImageView
+        android:src="@drawable/app_arch"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -71,4 +82,6 @@
             android:layout_gravity="center_horizontal|center"
             android:text="Logout" />
     </LinearLayout>
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>
