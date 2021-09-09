@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -47,9 +48,22 @@ class UserDashboardFragment : Fragment(R.layout.fragment_user_dashboard) {
         binding.btnLogOut.setOnClickListener {
             doLogOut()
         }
+
+        binding.btnCreateReport.setOnClickListener {
+            findNavController().navigate(R.id.action_userDashboardFragment_to_registerReportFragment)
+        }
     }
 
     fun setupObservers(){
+
+        viewModel.apiError.observe(viewLifecycleOwner, {
+            when(it){
+                is Resource.apiError->{
+                    showApiErrors(it.errorTypeName)
+                }
+            }
+        })
+
         viewModel.userInfo.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Loading -> {
@@ -89,6 +103,16 @@ class UserDashboardFragment : Fragment(R.layout.fragment_user_dashboard) {
          findNavController().navigate(R.id.action_userDashboardFragment_to_userLoginFragment)
     }
 
+    fun showApiErrors(errorType:String){
+        if(errorType.equals("TIMEOUT")){
+            showToast("No es posible conectarse al servidor.")
+        }else if(errorType.equals("NETWORK")){
+            showToast("No hay conexión para hacer la petición")
+        }
+    }
 
+    fun showToast(msg:String){
+        Toast.makeText(activity, ""+msg, Toast.LENGTH_LONG).show()
+    }
 
 }

@@ -41,5 +41,17 @@
         <action
             android:id="@+id/action_userDashboardFragment_to_userLoginFragment"
             app:destination="@id/userLoginFragment" />
+        <action
+            android:id="@+id/action_userDashboardFragment_to_registerReportFragment"
+            app:destination="@id/registerReportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerReportFragment"
+        android:name="com.example.kotlinlaravelapirestful.ui.report.RegisterReportFragment"
+        android:label="fragment_register_report"
+        tools:layout="@layout/fragment_register_report" >
+        <action
+            android:id="@+id/action_registerReportFragment_to_userDashboardFragment"
+            app:destination="@id/userDashboardFragment" />
     </fragment>
 </navigation>

@@ -48,9 +48,17 @@
         android:orientation="vertical" >
 
         <Button
+            android:id="@+id/btnCreateReport"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:text="Create new Report" />
+
+        <Button
             android:id="@+id/btnLogOut"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="145dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
             android:text="Logout" />

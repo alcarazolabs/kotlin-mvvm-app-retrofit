@@ -9,7 +9,10 @@ import com.example.kotlinlaravelapirestful.data.remote.UserDataSource
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
+import java.io.File
 
 //Esta clase implementa la interfaz del repositorio "UserRepository"
 //implementa sus metodos que buscaran la info en el server
@@ -37,4 +40,8 @@ class UserRepositoryImpl(
     override suspend fun saveAuthToken(token: String) {
         preferences.saveAuthToken(token)
     }
+
+    override suspend fun registerReport(access_token: String, description: RequestBody, photo: MultipartBody.Part, ): RegisterResponse = dataSource.registerReport(access_token, description, photo)
+
+
 }

@@ -9,7 +9,10 @@ import com.example.kotlinlaravelapirestful.data.model.UserInfoResponse
 import com.example.kotlinlaravelapirestful.repository.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
+import java.io.File
 
 //Codigo para obtener la data del servidor con retrofit y se la data al repositorio
 
@@ -30,4 +33,5 @@ class UserDataSource(private val webService: WebService) {
 
     suspend fun userInfo(access_token:String) : UserInfoResponse = webService.userInfo(access_token)
 
+    suspend fun registerReport(access_token: String, description: RequestBody, photo: MultipartBody.Part) : RegisterResponse = webService.registerReport(access_token, description, photo)
 }

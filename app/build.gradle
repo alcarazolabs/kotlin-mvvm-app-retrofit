@@ -10,11 +10,12 @@ android {
 
     defaultConfig {
         applicationId "com.example.kotlinlaravelapirestful"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -71,5 +72,7 @@ dependencies {
 
     //multidex para soportar mas de 64k metodos
     implementation "androidx.multidex:multidex:2.0.1"
+
+    implementation 'org.apache.directory.studio:org.apache.commons.io:2.4'
 
 }
