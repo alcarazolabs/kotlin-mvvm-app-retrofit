@@ -5,7 +5,7 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-
+//No usado por el momento
 fun View.snackbar(message: String) {
     Snackbar.make(
         this,
@@ -17,7 +17,7 @@ fun View.snackbar(message: String) {
         }
     }.show()
 }
-
+//Este metodo esta dentro de RegisterReportFragment
 fun ContentResolver.getFileName(fileUri: Uri): String {
     var name = ""
     val returnCursor = this.query(fileUri, null, null, null, null)

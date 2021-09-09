@@ -4,6 +4,7 @@ import com.example.demo.core.Resource
 import com.example.kotlinlaravelapirestful.core.UserPreferences
 import com.example.kotlinlaravelapirestful.data.model.LoginResponse
 import com.example.kotlinlaravelapirestful.data.model.RegisterResponse
+import com.example.kotlinlaravelapirestful.data.model.ReportsResponse
 import com.example.kotlinlaravelapirestful.data.model.UserInfoResponse
 import com.example.kotlinlaravelapirestful.data.remote.UserDataSource
 
@@ -42,6 +43,8 @@ class UserRepositoryImpl(
     }
 
     override suspend fun registerReport(access_token: String, description: RequestBody, photo: MultipartBody.Part, ): RegisterResponse = dataSource.registerReport(access_token, description, photo)
+
+    override suspend fun getReports(access_token: String): ReportsResponse = dataSource.getReports(access_token)
 
 
 }

@@ -2,6 +2,7 @@ package com.example.kotlinlaravelapirestful.repository
 
 import com.example.kotlinlaravelapirestful.data.model.LoginResponse
 import com.example.kotlinlaravelapirestful.data.model.RegisterResponse
+import com.example.kotlinlaravelapirestful.data.model.ReportsResponse
 import com.example.kotlinlaravelapirestful.data.model.UserInfoResponse
 import com.example.primerappmvvmretrofitkotlin.application.AppConstants
 import com.google.gson.GsonBuilder
@@ -40,6 +41,12 @@ interface WebService {
                                @Part("description") description: RequestBody,
                                @Part photo: MultipartBody.Part
     ) : RegisterResponse
+
+    //api para obtener todos los reportes
+    @Headers("Accept: application/json")
+    @GET("reports")
+    suspend fun getReports(@Header("Authorization") access_token:String): ReportsResponse
+
 
 }
 object RetrofitClient {

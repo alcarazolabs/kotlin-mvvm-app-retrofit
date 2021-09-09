@@ -4,6 +4,7 @@ object AppConstants {
 
     //API
     const val BASE_URL = "http://192.168.0.7:8000/api/"
+    const val BASE_URL_IMG = "http://192.168.0.7:8000/storage/"
     // const val API_KEY = "xxxxx"
 
 }

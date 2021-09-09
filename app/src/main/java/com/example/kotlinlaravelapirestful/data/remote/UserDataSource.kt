@@ -2,10 +2,7 @@ package com.example.kotlinlaravelapirestful.data.remote
 
 
 import com.example.demo.core.Resource
-import com.example.kotlinlaravelapirestful.data.model.LoginResponse
-import com.example.kotlinlaravelapirestful.data.model.RegisterResponse
-import com.example.kotlinlaravelapirestful.data.model.RegisterResponseObj
-import com.example.kotlinlaravelapirestful.data.model.UserInfoResponse
+import com.example.kotlinlaravelapirestful.data.model.*
 import com.example.kotlinlaravelapirestful.repository.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -34,4 +31,6 @@ class UserDataSource(private val webService: WebService) {
     suspend fun userInfo(access_token:String) : UserInfoResponse = webService.userInfo(access_token)
 
     suspend fun registerReport(access_token: String, description: RequestBody, photo: MultipartBody.Part) : RegisterResponse = webService.registerReport(access_token, description, photo)
+
+    suspend fun getReports(access_token:String) : ReportsResponse = webService.getReports(access_token)
 }

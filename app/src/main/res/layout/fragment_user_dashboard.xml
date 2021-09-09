@@ -11,10 +11,10 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/blue"
+        android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:text="USER DASHBOARD" />
+        android:text=".:: USER DASHBOARD ::." />
 
     <TextView
         android:id="@+id/lblUserNames"
@@ -54,6 +54,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
             android:text="Create new Report" />
+
+        <Button
+            android:id="@+id/btnReports"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:text="Reports" />
 
         <Button
             android:id="@+id/btnLogOut"

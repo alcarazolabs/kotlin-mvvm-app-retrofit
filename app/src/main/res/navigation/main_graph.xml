@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_userDashboardFragment_to_registerReportFragment"
             app:destination="@id/registerReportFragment" />
+        <action
+            android:id="@+id/action_userDashboardFragment_to_reportsFragment"
+            app:destination="@id/reportsFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerReportFragment"
@@ -53,5 +56,29 @@
         <action
             android:id="@+id/action_registerReportFragment_to_userDashboardFragment"
             app:destination="@id/userDashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reportsFragment"
+        android:name="com.example.kotlinlaravelapirestful.ui.report.ReportsFragment"
+        android:label="fragment_reports"
+        tools:layout="@layout/fragment_reports" >
+        <action
+            android:id="@+id/action_reportsFragment_to_detailReportFragment"
+            app:destination="@id/detailReportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailReportFragment"
+        android:name="com.example.kotlinlaravelapirestful.ui.report.DetailReportFragment"
+        android:label="fragment_detail_report"
+        tools:layout="@layout/fragment_detail_report" >
+        <argument
+            android:name="description"
+            app:argType="string" />
+        <argument
+            android:name="photo"
+            app:argType="string" />
+        <argument
+            android:name="created_at"
+            app:argType="string" />
     </fragment>
 </navigation>

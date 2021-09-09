@@ -52,6 +52,9 @@ class UserDashboardFragment : Fragment(R.layout.fragment_user_dashboard) {
         binding.btnCreateReport.setOnClickListener {
             findNavController().navigate(R.id.action_userDashboardFragment_to_registerReportFragment)
         }
+        binding.btnReports.setOnClickListener {
+            findNavController().navigate(R.id.action_userDashboardFragment_to_reportsFragment)
+        }
     }
 
     fun setupObservers(){

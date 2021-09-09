@@ -7,6 +7,7 @@ import com.example.kotlinlaravelapirestful.core.ApiCallsHandler
 import com.example.kotlinlaravelapirestful.data.model.RegisterResponse
 import com.example.kotlinlaravelapirestful.data.model.UserInfoResponse
 import com.example.kotlinlaravelapirestful.repository.UserRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,6 +37,22 @@ class ReportViewModel  (private var repo : UserRepository) : ViewModel(), ApiCal
     }
     //##########################################################################################
 
+    //####################### LiveData para Obtener todos los reportes #########################
+    fun fetchReports(access_token: String) = liveData(Dispatchers.IO) {
+        //Emitir primer estado 'carga'
+        emit(Resource.Loading())
+        try {
+            //Emitir segundo estado 'Exitoso'
+             var success =  ApiCallsHandler.safeApiCall(this@ReportViewModel) {
+                    Resource.Success(repo.getReports(access_token))
+                    }
+           emit(success)
+        } catch (e: Exception) {
+            //Tercer estado Error/Excepcion
+            emit(Resource.Failure(e))
+        }
+    }
+    //##########################################################################################
 
     //###### implemented methods from ApiCallsHandler.RemoteErrorEmitter #######################
     override fun onError(msg: String) {

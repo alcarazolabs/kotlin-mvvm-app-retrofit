@@ -5,8 +5,14 @@
     <!-- Usar: android:requestLegacyExternalStorage="true"
      dentro de application para no participar en los cambios desde Android 10
      https://medium.com/@sriramaripirala/android-10-open-failed-eacces-permission-denied-da8b630a89df -->
+
+    <!-- Se utilizo dentro de aplication:
+        android:hardwareAccelerated="false" <- Sirve para que la aplicación no se ponga lenta cuando se cargan imagenes.
+        android:largeHeap="true" <- Sir para soportar mas memoria cache en la memoria cache de la aplicacipm. Si no se agrega archivos grandes crashean el app cuando se suben al servidor.
+     -->
     <application
         android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

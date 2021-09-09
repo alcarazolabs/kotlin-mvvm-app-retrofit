@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.demo.core.Resource
 import com.example.kotlinlaravelapirestful.R
+import com.example.kotlinlaravelapirestful.core.UploadRequestBody
 import com.example.kotlinlaravelapirestful.core.UserPreferences
 import com.example.kotlinlaravelapirestful.data.remote.UserDataSource
 import com.example.kotlinlaravelapirestful.databinding.FragmentRegisterReportBinding
@@ -40,7 +41,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
-class RegisterReportFragment : Fragment(R.layout.fragment_register_report) {
+class RegisterReportFragment : Fragment(R.layout.fragment_register_report), UploadRequestBody.UploadCallback {
 
     private lateinit var binding : FragmentRegisterReportBinding
     protected lateinit var userPreferences: UserPreferences
@@ -67,6 +68,10 @@ class RegisterReportFragment : Fragment(R.layout.fragment_register_report) {
             registerReport()
         }
 
+        binding.btnCancel.setOnClickListener {
+            findNavController().navigate(R.id.action_registerReportFragment_to_userDashboardFragment)
+        }
+
         setupObservers()
     }
 
@@ -82,6 +87,7 @@ class RegisterReportFragment : Fragment(R.layout.fragment_register_report) {
             when (it) {
                 is Resource.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
+                    binding.progressBarHorizontal.progress=0
                 }
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE
@@ -100,6 +106,7 @@ class RegisterReportFragment : Fragment(R.layout.fragment_register_report) {
                 }
                 is Resource.Failure -> {
                     binding.progressBar.visibility = View.GONE
+                    binding.progressBarHorizontal.progress = 0
                     Log.d("Error", "Error: $it.exception ")
                 }
             }
@@ -180,8 +187,15 @@ class RegisterReportFragment : Fragment(R.layout.fragment_register_report) {
             //3. parsear file a requestBody luego a MultipartBody Part
             var imagePart: MultipartBody.Part? = null
             val fileReqBody = file.asRequestBody("image/*".toMediaType())
-            imagePart = MultipartBody.Part.createFormData("photo", file.name, fileReqBody)
+            //Instanciar clase helper que ayuda actualizar el progress bar horizontal
+            val body = UploadRequestBody(file, "image", this)
+            imagePart = MultipartBody.Part.createFormData("photo", file.name, body)
+            //El parámetro "body" de MultipartBody.Part.createFormData(..,body) es la variable de la clase  UploadRequestBody
+            // instanciada, se le pasa para poder actualizar el progressbar horizontal, si no deseamos hacer eso en su lugar
+            // se debe de pasar la variable fileReqBody en lugar de body.
+
             //Registrar el reporte llamado al método del ViewModel
+
             viewModel.registerReport(authToken!!,description_reqbody,imagePart)
         }
     }
@@ -204,5 +218,10 @@ class RegisterReportFragment : Fragment(R.layout.fragment_register_report) {
              authToken = userPreferences.authToken.first()
          }
         return authToken!!
+    }
+    //Método sobre escrito de UploadRequestBody.UploadCallback. Sirve para actualizar el
+    //porcentaje del progress bar.
+    override fun onProgressUpdate(percentage: Int) {
+            binding.progressBarHorizontal.progress = percentage
     }
 }
