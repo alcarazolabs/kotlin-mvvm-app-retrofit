@@ -31,5 +31,5 @@ An App using MVVM and Retrofit with Kotlin
   <img src="https://github.com/alcarazolabs/kotlin-mvvm-app-retrofit/blob/finalProject/images/demo6_detailreport.png">
   <strong>Navigation components view</strong>
   <br>
-  
+  <img src="https://github.com/alcarazolabs/kotlin-mvvm-app-retrofit/blob/finalProject/images/demo7_navigationcomponents.png">
 <img src="https://developer.android.com/topic/libraries/architecture/images/final-architecture.png">
