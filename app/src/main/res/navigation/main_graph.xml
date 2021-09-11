@@ -5,12 +5,25 @@
     android:id="@+id/main_graph"
     app:startDestination="@id/userLoginFragment">
     <!-- Action agregago para prevenir volver atras en el dashboard a login en su lugar se cerrará la app
-     Se usa popUtTo-->
+     Se usa popUtTo
+     Este action se usa en el fragment UserLoginFragment en el método openDashboard()
+     Se usa como:   findNavController().navigate(R.id.go_home)
+     -->
     <action
         android:id="@+id/go_home"
         app:destination="@+id/userDashboardFragment"
         app:popUpTo="@+id/main_graph"
     app:popUpToInclusive="true"/>
+    <!-- El siguiente action se utiliza en userDashboard en el metodo doLogout
+     Se usa como:  findNavController().navigate(R.id.go_login) de esa forma
+     se evita que el usuario en la vista/fragment login vuelva atras al dashboard.
+     solo podra regresar iniciando sesión otra vez.
+     -->
+    <action
+        android:id="@+id/go_login"
+        app:destination="@+id/userLoginFragment"
+        app:popUpTo="@+id/main_graph"
+        app:popUpToInclusive="true"/>
 
     <fragment
         android:id="@+id/userLoginFragment"

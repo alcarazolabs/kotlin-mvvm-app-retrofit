@@ -42,6 +42,7 @@ class UserDashboardFragment : Fragment(R.layout.fragment_user_dashboard) {
         userPreferences = UserPreferences(requireContext())
         lifecycleScope.launch { userPreferences.authToken.first() }
 
+
         setupObservers()
         getUserInfo()
 
@@ -103,7 +104,7 @@ class UserDashboardFragment : Fragment(R.layout.fragment_user_dashboard) {
         //delete auth-token
         userPreferences.clear()
         //send user to login
-         findNavController().navigate(R.id.action_userDashboardFragment_to_userLoginFragment)
+         findNavController().navigate(R.id.go_login)
     }
 
     fun showApiErrors(errorType:String){
@@ -117,5 +118,8 @@ class UserDashboardFragment : Fragment(R.layout.fragment_user_dashboard) {
     fun showToast(msg:String){
         Toast.makeText(activity, ""+msg, Toast.LENGTH_LONG).show()
     }
+
+
+
 
 }
